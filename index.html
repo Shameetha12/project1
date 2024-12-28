@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Shopping Cart</title>
+    <style>
+        body {
+            font-family: Arial;
+            background-color:whitesmoke;
+            padding: 20px;
+        }
+        .product {
+            margin-bottom: 20px;
+        }
+        .cart {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: white;
+            border: 1px solid white;
+        }
+        .cart ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .cart li {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+<h1>Simple Shopping Cart</h1>
+<div class="product">
+    <img src="https://images.pexels.com/photos/3747266/pexels-photo-3747266.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Graphic Design" width="100" height="100">
+    <h3>Graphic Design</h3>
+    <p>Rs.10000</p>
+    <button onclick="addToCart('Graphic Design', 1000)">Add to Cart</button>
+</div>
+<div class="product">
+    <img src="https://images.pexels.com/photos/2386687/pexels-photo-2386687.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Take the Risk" width="100" height="100">
+    <h3>Take the Risk</h3>
+    <p>Rs.15000</p>
+    <button onclick="addToCart('Take the Risk', 1500)">Add to Cart</button>
+</div>
+<div class="product">
+    <img src="https://images.pexels.com/photos/3990897/pexels-photo-3990897.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Face it" width="100" height="100">
+    <h3>Face it</h3>
+    <p>Rs.900</p>
+    <button onclick="addToCart('Face it', 900)">Add to Cart</button>
+</div>
+<div class="cart">
+    <h3>Your Cart</h3>
+    <ul id="cart-items"></ul>
+    <p>Total: Rs.<span id="total-price">0</span></p>
+    <button onclick="clearCart()">Clear Cart</button>
+</div>
+<script>
+    let cart = [];  
+    function addToCart(productName, productPrice) {
+        cart.push({ name: productName, price: productPrice });
+        updateCart();
+    }
+    function removeItem(index) {
+        cart.splice(index, 1);
+        updateCart();
+    }
+    function updateCart() {
+        const cartItemsList = document.getElementById('cart-items');
+        const totalPriceElem = document.getElementById('total-price');
+        cartItemsList.innerHTML = '';
+        let total = 0;
+        cart.forEach((item, index) => {
+            const li = document.createElement('li');
+            li.textContent = `${item.name} - Rs.${item.price}`;
+            const removeButton = document.createElement('button');
+            removeButton.textContent = 'Remove';
+            removeButton.onclick = () => removeItem(index);
+            li.appendChild(removeButton);
+            cartItemsList.appendChild(li);
+            total += item.price;  
+        });
+      
+        totalPriceElem.textContent = total;
+    } 
+    function clearCart() {
+        cart = []; 
+        updateCart();  }
+</script>
+</body>
+</html>
